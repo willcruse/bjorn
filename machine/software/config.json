@@ -1,0 +1,40 @@
+{
+    "pumps": [
+        {
+            "type": "PeristalticPump",
+            "contents": "vodka",
+            "pins": [1],
+            "switch_pin": 0
+        },
+        {
+            "type": "PeristalticPump",
+            "contents": "rum",
+            "pins": [1],
+            "switch_pin": 0
+        },
+        {
+            "type": "PeristalticPump",
+            "contents": "whisky",
+            "pins": [1],
+            "switch_pin": 0
+        },
+        {
+            "type": "PeristalticPump",
+            "contents": "gin",
+            "pins": [1],
+            "switch_pin": 0
+        },
+        {
+            "type": "Solenoid",
+            "contents": "lemonade",
+            "pins": [1],
+            "switch_pin": 0
+        },
+        {
+            "type": "Solenoid",
+            "contents": "coke",
+            "pins": [1],
+            "switch_pin": 0
+        }
+    ]
+}
