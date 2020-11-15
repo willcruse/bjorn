@@ -1,6 +1,6 @@
 import asyncio
 from quart import Quart, request, jsonify
-from flask_cors import CORS
+from quart_cors import cors
 
 from config import Config
 from factory import Factory
@@ -20,7 +20,7 @@ print([str(pump) for pump in pumps])
 
 
 app = Quart(__name__)
-# CORS(app)
+cors(app)
 
 def make_error(message: str):
     return {
@@ -41,7 +41,7 @@ async def make_drink():
         5. Send pump instructions
         6. Return success
     """
-    
+
     instructions = [] # [(pump, amount)]
     try:
         await asyncio.gather(
