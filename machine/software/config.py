@@ -10,4 +10,7 @@ class Config:
         return self.json_contents
 
     def get_pumps(self) -> List:
-        return self.json_contents["pumps"] 
+        return self.json_contents["pumps"]
+
+    def get_drinks(self) -> List:
+        return self.json_contents["drinks"]
