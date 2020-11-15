@@ -14,7 +14,7 @@ class Factory:
 
     def pump_factory(self, pump_type, pump_config):
         try:
-            return self._discoverer.objects[pump_type](pump_config['pins'], pump_config['switch_pin'], pump_config['contents'])
+            return self._discoverer.objects[pump_type](pump_config['config'])
         except KeyError as exe:
             print(self._discoverer.objects)
             raise Exception("Invalid Pump Type") from exe
