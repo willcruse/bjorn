@@ -1,5 +1,7 @@
 import asyncio
 from typing import Optional, List, Dict
+
+import RPi.GPIO as GPIO
 from quart import Quart, request, jsonify
 from quart_cors import cors
 
@@ -7,6 +9,8 @@ from config import Config
 from factory import Factory
 from drinks import Drink
 from storage import LocalStorage
+
+GPIO.setmode(GPIO.BOARD)
 
 factory = Factory()
 storage = LocalStorage()
@@ -28,7 +32,7 @@ cors(app)
 
 def find_drink(drinks: List[Drink], target_name: str) -> Optional[Drink]:
     for drink in drinks:
-        if drink["name"] == target_name:
+        if drink == target_name:
             return drink
     return None
 
@@ -56,7 +60,7 @@ async def make_drink():
         return jsonify(make_error("Required Key missing"))
 
     drinks = storage.get_drinks()
-    drink_key = find_drink(drinks, request_json["name"])
+    drink_key = find_drink(drinks.keys(), request_json["name"])
     if drink_key is None:
         return jsonify(make_error("Drink name not in database"))
     
@@ -66,7 +70,7 @@ async def make_drink():
     for component in components:
         for pump in pumps:
             if pump.contents == component[0]:
-                instructions.append(pump, component[1])
+                instructions.append((pump, component[1]))
                 break
         
     if len(instructions) != len(components):
