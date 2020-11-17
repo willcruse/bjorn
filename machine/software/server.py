@@ -73,12 +73,15 @@ async def make_drink():
         return jsonify(make_error("Incorrect pump config"))
 
     try:
-        await asyncio.gather(
+        results = await asyncio.gather(
             *[instruction[0].pour(instruction[1]) for instruction in instructions]
         )
     except Exception as e:
         return jsonify(make_error(f"Couldn't make drink: {e}"))
-    return 'Make drink'
+    if not all(results):
+        return jsonify(make_error("Failed to make drink"))
+    
+    return jsonify({"success": True})
 
 @app.route('/config', methods=['GET', 'POST'])
 def config_request():
