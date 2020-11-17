@@ -1,5 +1,5 @@
 import asyncio
-from typing import Optional
+from typing import Optional, List, Dict
 from quart import Quart, request, jsonify
 from quart_cors import cors
 
@@ -26,7 +26,7 @@ print([str(pump) for pump in pumps])
 app = Quart(__name__)
 cors(app)
 
-def find_drink(drinks: list[Drink], target_name: str) -> Optional[Drink]:
+def find_drink(drinks: List[Drink], target_name: str) -> Optional[Drink]:
     for drink in drinks:
         if drink["name"] == target_name:
             return drink
@@ -51,15 +51,16 @@ async def make_drink():
         5. Send pump instructions
         6. Return success
     """
-    request_json = request.json
+    request_json = await request.get_json()
     if any(req_key not in request_json.keys() for req_key in ["name", "amount"]):
         return jsonify(make_error("Required Key missing"))
 
     drinks = storage.get_drinks()
-    drink = find_drink(drinks, request_json["name"])
-    if drink is None:
+    drink_key = find_drink(drinks, request_json["name"])
+    if drink_key is None:
         return jsonify(make_error("Drink name not in database"))
-
+    
+    drink = Drink(drinks[drink_key])
     components = drink.get_components(request_json["amount"])
     instructions = [] # [(pump, amount)]
     for component in components:
@@ -73,7 +74,7 @@ async def make_drink():
 
     try:
         await asyncio.gather(
-            *[instruction[0].pour(instructions[1]) for instruction in instructions]
+            *[instruction[0].pour(instruction[1]) for instruction in instructions]
         )
     except Exception as e:
         return jsonify(make_error(f"Couldn't make drink: {e}"))
@@ -99,4 +100,4 @@ def del_drink():
     return 'Delete drink'
 
 if __name__=='__main__':
-    app.run()
+    app.run(host='0.0.0.0')

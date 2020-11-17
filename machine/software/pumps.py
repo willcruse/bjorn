@@ -35,7 +35,7 @@ class PeristalticPump(Output):
         sleep_time = amount / (10/6) # Pumps at ~100ml/m -> 10/6 ml/s
         self.pouring = True
         GPIO.output(self.pins[0], GPIO.HIGH)
-        time.sleep(sleep_time)
+        await asyncio.sleep(sleep_time)
         GPIO.output(self.pins[0]. GPIO.LOW)
         self.pouring = False
         return True
@@ -52,8 +52,8 @@ class LED(Output):
 
         sleep_time = amount / (10/6) # Pumps at ~100ml/m -> 10/6 ml/s
         self.pouring = True
-        GPIO.output(self.pins, GPIO.HIGH)
-        time.sleep(sleep_time)
-        GPIO.output(self.pins. GPIO.LOW)
+        GPIO.output(self.pin, GPIO.HIGH)
+        await asyncio.sleep(sleep_time)
+        GPIO.output(self.pin. GPIO.LOW)
         self.pouring = False
         return True

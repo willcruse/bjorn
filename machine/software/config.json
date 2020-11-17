@@ -4,42 +4,42 @@
             "type": "LED",
             "config": {
                 "contents": "vodka",
-                "pins": [17]
+                "pins": [3]
             }
         },
         {
             "type": "LED",
             "config": {
                 "contents": "whisky",
-                "pins": [27]
+                "pins": [5]
             }
         },
         {
             "type": "LED",
             "config": {
                 "contents": "tequila",
-                "pins": [22]
+                "pins": [7]
             }
         },
         {
             "type": "LED",
             "config": {
                 "contents": "gin",
-                "pins": [10]
+                "pins": [11]
             }
         },
         {
             "type": "LED",
             "config": {
                 "contents": "coke",
-                "pins": [9]
+                "pins": [13]
             }
         },
         {
             "type": "LED",
             "config": {
                 "contents": "lemonade",
-                "pins": [11]
+                "pins": [15]
             }
         }
     ],
