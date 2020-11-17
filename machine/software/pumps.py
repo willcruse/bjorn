@@ -39,3 +39,21 @@ class PeristalticPump(Output):
         GPIO.output(self.pins[0]. GPIO.LOW)
         self.pouring = False
         return True
+
+class LED(Output):
+    def __init__(self, config: dict) -> None:
+        super().__init__(config)
+        self.pin = config["pins"][0]
+        GPIO.setup(self.pin, GPIO.OUT)
+    
+    async def pour(self, amount: int) -> bool:
+        if self.pouring:
+            return False
+
+        sleep_time = amount / (10/6) # Pumps at ~100ml/m -> 10/6 ml/s
+        self.pouring = True
+        GPIO.output(self.pins, GPIO.HIGH)
+        time.sleep(sleep_time)
+        GPIO.output(self.pins. GPIO.LOW)
+        self.pouring = False
+        return True
