@@ -4,10 +4,9 @@ class Drink():
     def __init__(self, config: Dict) -> None:
         """Turns component amounts into proportion of total"""
         self.name = config["name"]
-        
+
         components = config["components"]
         total_amount = sum(component[1] for component in components)
-        print(total_amount)
         self.components = [(component[0], component[1]/total_amount) for component in components]
 
     def get_components(self, amount: int) -> List:

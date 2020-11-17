@@ -11,10 +11,10 @@
     "drinks": [
         {
             "name": "Vodka and Coke",
-            "components": {
-                "vodka": 50,
-                "coke": 200
-            }
+            "components": [
+                ["vodka", 50],
+                ["coke", 200]
+            ]
         }
     ]
 }
