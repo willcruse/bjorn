@@ -85,11 +85,28 @@ async def make_drink():
     return jsonify({"success": True})
 
 @app.route('/config', methods=['GET', 'POST'])
-def config_request():
+async def config_request():
+    """Broken if not full config given"""
     if request.method == 'GET':
         return jsonify(config.get_json())
-    
-    return 'Set config'
+
+    required_keys = ["pumps"]
+    request_json = await request.get_json()
+    request_keys = set(request_json.keys())
+    if not all(required_key in request_keys for required_key in required_keys):
+        return make_error("Missing a required key")
+
+    request_pumps = request_json["pumps"]
+    for request_config in request_pumps:
+        if request_config.get("number") is None:
+            continue
+        pump_keys = ["type", "contents", "pins"]
+        old_pump = PUMPS[request_config.get("number")]
+        new_config = {}
+        for pump_key in pump_keys:
+            new_config[pump_key] = request_config.get(pump_key)
+        PUMPS[request_config.get("number")] = factory.pump_factory(new_config["type"], new_config)
+    return jsonify({"pumps": [pump.to_json() for pump in PUMPS]})
 
 @app.route('/drinks', methods=['GET'])
 def get_drinks():

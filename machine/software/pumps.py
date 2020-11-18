@@ -17,6 +17,10 @@ class Output():
     def __str__(self):
         return self.contents
 
+    def to_json(self):
+        """Converts Output to a JSON friendly format"""
+        return {"contents": self.contents}
+
     async def pour(self, amount: int)-> bool:
         """Activate pump for given amount"""
         raise NotImplementedError
@@ -43,7 +47,8 @@ class PeristalticPump(Output):
 class LED(Output):
     def __init__(self, config: dict) -> None:
         super().__init__(config)
-        self.pin = config["pins"][0]
+        self.pins = config["pins"]
+        self.pin = self.pins[0]
         GPIO.setup(self.pin, GPIO.OUT)
     
     async def pour(self, amount: int) -> bool:
