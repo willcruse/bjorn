@@ -96,8 +96,19 @@ def drinks():
     return jsonify({"drinks": storage.get_drinks()})
 
 @app.route('/add-drink', methods=['POST'])
-def add_drink():
-    return 'Add new drink'
+async def add_drink():
+    request_json = await request.get_json()
+    keys = set(request_json.keys())
+    if not all(req_key in keys for req_key in ["name", "contents"]):
+        return make_error("Missing a required key")
+
+    try:
+        drink = Drink(request_json)
+    except Exception as e:
+        return make_error(e)
+
+    storage.save_drink(drink.name, drink)
+    return jsonify({"success": True})
 
 @app.route('/delete-drink', methods=['POST'])
 def del_drink():
