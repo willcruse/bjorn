@@ -10,6 +10,7 @@ from factory import Factory
 from drinks import Drink
 from storage import LocalStorage
 
+# Initial Setup
 GPIO.setmode(GPIO.BOARD)
 
 factory = Factory()
@@ -21,11 +22,7 @@ drink_configs = config.get_drinks()
 for drink_config in drink_configs:
     storage.save_drink(drink_config["name"], drink_config)
 
-pumps = [factory.pump_factory(pump_config['type'], pump_config) for pump_config in pump_configs]
-drinks = [Drink(drink_config) for drink_config in drink_configs]
-
-print([str(pump) for pump in pumps])
-
+PUMPS = [factory.pump_factory(pump_config['type'], pump_config) for pump_config in pump_configs]
 
 app = Quart(__name__)
 cors(app)
@@ -68,7 +65,7 @@ async def make_drink():
     components = drink.get_components(request_json["amount"])
     instructions = [] # [(pump, amount)]
     for component in components:
-        for pump in pumps:
+        for pump in PUMPS:
             if pump.contents == component[0]:
                 instructions.append((pump, component[1]))
                 break
