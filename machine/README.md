@@ -31,10 +31,55 @@ On failure:</br>
 ```
 
 ### Route '/config'
-On GET request gets the current config of the machine</br>
+On GET request gets the config file of the machine</br>
 On POST request sets the config of the machine</br>
 Methods: 'GET', 'POST'</br>
-<b>TO BE IMPLEMENTED</b>
+GET:</br>
+On success:
+```
+{
+    "success": true
+    "pumps": [
+        {
+            "type": PUMP_TYPE,
+            "config": {
+                "contents": DRINK_TYPE,
+                "pins": [PIN_NUMBERS]
+            }
+        }
+    ]
+}
+```
+On failure:
+```
+{
+    "error": "ERROR_MESSAGE"
+}
+```
+POST:</br>
+`number`: is the pump number to modify (corresponds to array index)</br>
+All arguments except number are optional within the pump info, if ommitted existing config will be used</br>
+Request JSON:
+```
+{
+    pumps: [
+        {
+            number: PUMP_NUMBER,
+            type: PUMP_TYPE //optional
+            config: {
+                contents: DRINK_TYPE, //optional
+                pins: [PIN_NUMBERS] //optional
+            }
+        }
+    ]
+}
+```
+On failure:
+```
+{
+    "error": "ERROR_MESSAGE"
+}
+```
 
 ### Route '/drinks'
 Fetches all stored drinks on the machine</br>
@@ -67,7 +112,7 @@ Request JSON:
 ```
 {
     "name": DRINK_NAME,
-    "contents": [
+    "components": [
         [INGREDIENT, AMOUNT]
     ]
 }
