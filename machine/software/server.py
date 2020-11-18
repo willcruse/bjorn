@@ -20,7 +20,7 @@ pump_configs = config.get_pumps()
 drink_configs = config.get_drinks()
 
 for drink_config in drink_configs:
-    storage.save_drink(drink_config["name"], drink_config)
+    storage.save_drink(drink_config["name"], Drink(drink_config))
 
 PUMPS = [factory.pump_factory(pump_config['type'], pump_config) for pump_config in pump_configs]
 
@@ -92,8 +92,10 @@ def config_request():
     return 'Set config'
 
 @app.route('/drinks', methods=['GET'])
-def drinks():
-    return jsonify({"drinks": storage.get_drinks()})
+def get_drinks():
+    drinks = storage.get_drinks()
+    drinks_json = {drink.name: drink.to_json() for _, drink in drinks}
+    return jsonify({"drinks": drinks_json})
 
 @app.route('/add-drink', methods=['POST'])
 async def add_drink():

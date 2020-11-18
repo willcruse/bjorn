@@ -13,6 +13,9 @@ class Drink():
         """Returns amount to pump for each component in the drink"""
         return [(component[0], component[1]*amount) for component in self.components]
 
+    def to_json(self):
+        return {"name": self.name, "components": self.components}
+
 
 class Drinks():
     def __init__(self) -> None:
