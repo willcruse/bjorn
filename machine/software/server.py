@@ -99,13 +99,13 @@ def drinks():
 async def add_drink():
     request_json = await request.get_json()
     keys = set(request_json.keys())
-    if not all(req_key in keys for req_key in ["name", "contents"]):
+    if not all(req_key in keys for req_key in ["name", "components"]):
         return make_error("Missing a required key")
 
     try:
         drink = Drink(request_json)
     except Exception as e:
-        return make_error(e)
+        return make_error(str(e))
 
     storage.save_drink(drink.name, drink)
     return jsonify({"success": True})
