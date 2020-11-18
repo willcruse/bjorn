@@ -61,7 +61,7 @@ async def make_drink():
     if drink_key is None:
         return jsonify(make_error("Drink name not in database"))
     
-    drink = Drink(drinks[drink_key])
+    drink = drinks[drink_key]
     components = drink.get_components(request_json["amount"])
     instructions = [] # [(pump, amount)]
     for component in components:
@@ -94,7 +94,7 @@ def config_request():
 @app.route('/drinks', methods=['GET'])
 def get_drinks():
     drinks = storage.get_drinks()
-    drinks_json = {drink.name: drink.to_json() for _, drink in drinks}
+    drinks_json = {drink.name: drink.to_json() for _, drink in drinks.items()}
     return jsonify({"drinks": drinks_json})
 
 @app.route('/add-drink', methods=['POST'])
