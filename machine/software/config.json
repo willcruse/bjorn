@@ -1,0 +1,55 @@
+{
+    "pumps": [
+        {
+            "type": "LED",
+            "config": {
+                "contents": "vodka",
+                "pins": [3]
+            }
+        },
+        {
+            "type": "LED",
+            "config": {
+                "contents": "whisky",
+                "pins": [5]
+            }
+        },
+        {
+            "type": "LED",
+            "config": {
+                "contents": "tequila",
+                "pins": [7]
+            }
+        },
+        {
+            "type": "LED",
+            "config": {
+                "contents": "gin",
+                "pins": [11]
+            }
+        },
+        {
+            "type": "LED",
+            "config": {
+                "contents": "coke",
+                "pins": [13]
+            }
+        },
+        {
+            "type": "LED",
+            "config": {
+                "contents": "lemonade",
+                "pins": [15]
+            }
+        }
+    ],
+    "drinks": [
+        {
+            "name": "Vodka and Coke",
+            "components": [
+                ["vodka", 50],
+                ["coke", 200]
+            ]
+        }
+    ]
+}
