@@ -88,7 +88,9 @@ async def make_drink():
 async def config_request():
     """Broken if not full config given"""
     if request.method == 'GET':
-        return jsonify(config.get_json())
+        current_config = {}
+        current_config['pumps'] = [pump.to_json() for pump in PUMPS]
+        return jsonify(current_config)
 
     required_keys = ["pumps"]
     request_json = await request.get_json()
