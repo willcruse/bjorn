@@ -58,17 +58,31 @@ On failure:
 ```
 POST:</br>
 `number`: is the pump number to modify (corresponds to array index)</br>
-All arguments except number are optional within the pump info, if ommitted existing config will be used</br>
 Request JSON:
 ```
 {
     pumps: [
         {
             number: PUMP_NUMBER,
-            type: PUMP_TYPE //optional
+            type: PUMP_TYPE 
             config: {
-                contents: DRINK_TYPE, //optional
-                pins: [PIN_NUMBERS] //optional
+                contents: DRINK_TYPE, 
+                pins: [PIN_NUMBERS] 
+            }
+        }
+    ]
+}
+```
+On success:
+```
+{
+    pumps: [
+        {
+            number: PUMP_NUMBER,
+            type: PUMP_TYPE
+            config: {
+                contents: DRINK_TYPE,
+                pins: [PIN_NUMBERS]
             }
         }
     ]
