@@ -11,6 +11,9 @@ class Storage():
     def save_drink(self, label: str, drink: Drink):
         raise NotImplementedError
 
+    def del_drink(self, label):
+        raise NotImplementedError
+
 
 class LocalStorage(Storage):
     def __init__(self):
@@ -24,3 +27,6 @@ class LocalStorage(Storage):
 
     def save_drink(self, label: str, drink: Drink):
         self._drinks[label] = drink
+
+    def del_drink(self, label):
+        self._drinks.pop(label, None)

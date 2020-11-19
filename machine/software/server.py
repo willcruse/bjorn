@@ -130,8 +130,14 @@ async def add_drink():
     return jsonify({"success": True})
 
 @app.route('/delete-drink', methods=['POST'])
-def del_drink():
-    return 'Delete drink'
+async def del_drink():
+    request_json = await request.get_json()
+    keys = set(request_json.keys())
+    if not all(req_key in keys for req_key in ["name"]):
+        return make_error("Missing a required key")
+
+    storage.del_drink(request_json["name"])
+    return jsonify({"success": True})
 
 if __name__=='__main__':
     app.run(host='0.0.0.0')
