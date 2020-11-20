@@ -1,7 +1,8 @@
 # Bjorn v3
 
 ## About
-Cocktail maker version 3 with a horizontal, belt design
+My third iteration of a cocktail maker with a few extras thrown in.</br>
+
 
 ## Directories
 
