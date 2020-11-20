@@ -122,7 +122,7 @@ async def add_drink():
     keys = set(request_json.keys())
     if not all(req_key in keys for req_key in ["name", "components"]):
         return make_error("Missing a required key")
-
+    request_json["components"] = [(component[0], float(component[1])) for component in request_json["components"]]
     try:
         drink = Drink(request_json)
     except Exception as e:
