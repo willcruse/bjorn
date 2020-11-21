@@ -52,4 +52,9 @@ class LocalStorage(Storage):
             return self._pumps[index]
         return None
 
+    def to_dict(self):
+        return {
+            "pumps": [pump.to_json() for pump in self._pumps],
+            "drinks": [drink.to_json() for _,drink in self._drinks.items()]
+        }
     

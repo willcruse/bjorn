@@ -1,7 +1,7 @@
 import asyncio
 from typing import Optional, List, Dict
 
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 from quart import Quart, request, jsonify
 from quart_cors import cors
 
@@ -11,7 +11,7 @@ from drinks import Drink
 from storage import LocalStorage
 
 # Initial Setup
-GPIO.setmode(GPIO.BOARD)
+# GPIO.setmode(GPIO.BOARD)
 
 factory = Factory()
 storage = LocalStorage()
@@ -89,9 +89,7 @@ async def make_drink():
 async def config_request():
     """Broken if not full config given"""
     if request.method == 'GET':
-        current_config = {}
-        current_config['pumps'] = [pump.to_json() for pump in storage.get_pumps()]
-        return jsonify(current_config)
+        return jsonify(storage.to_dict())
 
     required_keys = ["pumps"]
     request_json = await request.get_json()
