@@ -79,7 +79,7 @@ function NewDrink(props) {
                                 value={componentName}
                                 onChange={(event) => {setComponentName(event.target.value)}}
                             >
-                                {props.pumps.map(val => <option key={val.contents}>{val.contents}</option>)}
+                                {props.pumps.map(val => <option key={val.config.contents}>{val.config.contents}</option>)}
                             </FormSelect>
                         </FormGroup>
                         <FormGroup>

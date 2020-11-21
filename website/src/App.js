@@ -15,7 +15,7 @@ function App() {
 
   const connectHandler = () => {
     if (isValidIP(machineAddress)) {
-      fetch(`http://${machineAddress}:${port}/drinks`, {
+      fetch(`http://${machineAddress}:${port}/config`, {
         mode: 'cors'
       }).then((response) => {
         return response.json();
@@ -23,16 +23,8 @@ function App() {
         if (json.drinks) {
           setDrinks(json.drinks);
         }
-      }).catch((err) => {
-        console.warn(err);
-      });
-      fetch(`http://${machineAddress}:${port}/config`, {
-        mode: 'cors'
-      }).then((response) => {
-        return response.json();
-      }).then((json) => {
         if (json.pumps) {
-          setPumps(json.pumps);
+          setPumps(json.pumps)
         }
       }).catch((err) => {
         console.warn(err);

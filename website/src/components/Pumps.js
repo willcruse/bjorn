@@ -6,7 +6,7 @@ export function Pumps(props){
         <Card>
             <CardBody>
                 <CardTitle>Pumps</CardTitle>
-                {props.pumps.map((val) => <CardText key={val.contents}>{val.contents}</CardText>)}
+                {props.pumps.map((val) => <CardText key={val.config.contents}>{val.config.contents}</CardText>)}
             </CardBody>
         </Card>
     );
