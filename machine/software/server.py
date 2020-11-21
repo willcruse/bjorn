@@ -22,7 +22,8 @@ drink_configs = config.get_drinks()
 for drink_config in drink_configs:
     storage.save_drink(drink_config["name"], Drink(drink_config))
 
-PUMPS = [factory.pump_factory(pump_config['type'], pump_config) for pump_config in pump_configs]
+for pump_index, pump_config in enumerate(pump_configs):
+    storage.save_pump(pump_index, factory.pump_factory(pump_config['type'], pump_config))
 
 app = Quart(__name__)
 cors(app)
@@ -65,7 +66,7 @@ async def make_drink():
     components = drink.get_components(float(request_json["amount"]))
     instructions = [] # [(pump, amount)]
     for component in components:
-        for pump in PUMPS:
+        for pump in storage.get_pumps():
             if pump.contents == component[0]:
                 instructions.append((pump, component[1]))
                 break
@@ -89,7 +90,7 @@ async def config_request():
     """Broken if not full config given"""
     if request.method == 'GET':
         current_config = {}
-        current_config['pumps'] = [pump.to_json() for pump in PUMPS]
+        current_config['pumps'] = [pump.to_json() for pump in storage.get_pumps()]
         return jsonify(current_config)
 
     required_keys = ["pumps"]
@@ -103,12 +104,12 @@ async def config_request():
         if request_config.get("number") is None:
             continue
         pump_keys = ["type", "contents", "pins"]
-        old_pump = PUMPS[request_config.get("number")]
+        old_pump = storage.get_pump(request_config.get("number"))
         new_config = {}
         for pump_key in pump_keys:
             new_config[pump_key] = request_config.get(pump_key)
-        PUMPS[request_config.get("number")] = factory.pump_factory(new_config["type"], new_config)
-    return jsonify({"pumps": [pump.to_json() for pump in PUMPS]})
+        storage.save_pump(request_config["number"], factory.pump_factory(new_config["type"], new_config))
+    return jsonify({"pumps": [pump.to_json() for pump in storage.get_pumps()]})
 
 @app.route('/drinks', methods=['GET'])
 def get_drinks():
