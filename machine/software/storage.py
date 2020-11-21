@@ -1,3 +1,4 @@
+import json
 from drinks import Drink
 
 class Storage():
@@ -14,10 +15,19 @@ class Storage():
     def del_drink(self, label):
         raise NotImplementedError
 
+    def save_pump(self, index, pump):
+        raise NotImplementedError
+
+    def get_pumps(self):
+        raise NotImplementedError
+
+    def get_pump(self, index):
+        raise NotImplementedError
 
 class LocalStorage(Storage):
     def __init__(self):
         self._drinks = {}
+        self._pumps = [None] * 6
 
     def get_drinks(self):
         return self._drinks
@@ -30,3 +40,16 @@ class LocalStorage(Storage):
 
     def del_drink(self, label):
         self._drinks.pop(label, None)
+
+    def save_pump(self, index, pump):
+        self._pumps[index] = pump
+
+    def get_pumps(self):
+        return self._pumps
+
+    def get_pump(self, index):
+        if 0 <= index < 6:
+            return self._pumps[index]
+        return None
+
+    
