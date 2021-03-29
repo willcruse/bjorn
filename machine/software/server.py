@@ -1,5 +1,6 @@
 import asyncio
 from typing import Optional, List, Dict
+import random
 
 # import RPi.GPIO as GPIO
 from quart import Quart, request, jsonify
@@ -138,6 +139,43 @@ async def del_drink():
         return make_error("Missing a required key")
 
     storage.del_drink(request_json["name"])
+    return jsonify({"success": True})
+
+@app.route('/random', methods=['POST'])
+async def random_drink():
+    """
+        1. Load drinks
+        2. Find drink
+        3. Check current config supports
+        4. Generate amounts for each part
+        5. Send pump instructions
+        6. Return success
+    """
+    request_json = await request.get_json()
+    if any(req_key not in request_json.keys() for req_key in ["amount"]):
+        return jsonify(make_error("Required Key missing"))
+
+    drinks = storage.get_drinks()
+    drink_key = find_drink(drinks.keys(), request_json["name"])
+    if drink_key is None:
+        return jsonify(make_error("Drink name not in database"))
+
+
+    random_numbers = [random.random() for i in range(6)]
+    sum_nums = sum(random_numbers)
+    amounts = [(num/sum_nums)*request_json["amount"] for num in random_numbers]
+
+    instructions = zip(amounts, storage.get_pumps())
+
+    try:
+        results = await asyncio.gather(
+            *[instruction[0].pour(instruction[1]) for instruction in instructions]
+        )
+    except Exception as e:
+        return jsonify(make_error(f"Couldn't make drink: {e}"))
+    if not all(results):
+        return jsonify(make_error("Failed to make drink"))
+    
     return jsonify({"success": True})
 
 if __name__=='__main__':
