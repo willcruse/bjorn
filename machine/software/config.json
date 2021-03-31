@@ -1,45 +1,45 @@
 {
     "pumps": [
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
                 "contents": "vodka",
-                "pins": [3]
+                "pins": [3, 5]
             }
         },
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
                 "contents": "whisky",
-                "pins": [5]
+                "pins": [11, 13]
             }
         },
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
                 "contents": "tequila",
-                "pins": [7]
+                "pins": [16, 18]
             }
         },
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
                 "contents": "gin",
-                "pins": [11]
+                "pins": [21, 23]
             }
         },
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
                 "contents": "coke",
-                "pins": [13]
+                "pins": [29, 31]
             }
         },
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
                 "contents": "lemonade",
-                "pins": [15]
+                "pins": [36, 38]
             }
         }
     ],
