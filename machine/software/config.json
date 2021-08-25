@@ -1,45 +1,45 @@
 {
     "pumps": [
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
-                "contents": "vodka",
-                "pins": [3]
+                "contents": "jager",
+                "pins": [3, 5]
             }
         },
         {
-            "type": "LED",
-            "config": {
-                "contents": "whisky",
-                "pins": [5]
-            }
-        },
-        {
-            "type": "LED",
-            "config": {
-                "contents": "tequila",
-                "pins": [7]
-            }
-        },
-        {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
                 "contents": "gin",
-                "pins": [11]
+                "pins": [11, 13]
             }
         },
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
-                "contents": "coke",
-                "pins": [13]
+                "contents": "vodka",
+                "pins": [16, 18]
             }
         },
         {
-            "type": "LED",
+            "type": "PeristalticPump",
             "config": {
-                "contents": "lemonade",
-                "pins": [15]
+                "contents": "whisky",
+                "pins": [21, 23]
+            }
+        },
+        {
+            "type": "PeristalticPump",
+            "config": {
+                "contents": "jager2",
+                "pins": [29, 31]
+            }
+        },
+        {
+            "type": "PeristalticPump",
+            "config": {
+                "contents": "rum",
+                "pins": [36, 38]
             }
         }
     ],
