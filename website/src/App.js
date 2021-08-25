@@ -95,7 +95,7 @@ function App() {
     <Navbar type="dark" theme="primary" expand="md">
         <NavbarBrand href="#">Bjorn</NavbarBrand>
       </Navbar>
-    <Container id="app-container" style={{"marginTop": "1rem"}} fluid>
+    <Container id="app-container" style={{"marginTop": "1rem"}}>
       <Row>
         <Col>
         <CardDeck>
