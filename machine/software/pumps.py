@@ -2,11 +2,11 @@ from typing import List
 import time
 import asyncio
 
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # Mock GPIO for dev on non-GPIO device
-from mock import MagicMock
-GPIO = MagicMock()
+# from mock import MagicMock
+# GPIO = MagicMock()
 
 class Output():
     """Class representing a fluid dispenser"""
@@ -48,7 +48,7 @@ class PeristalticPump(Output):
         self.pouring = True
         GPIO.output(self.pins[0], GPIO.HIGH)
         await asyncio.sleep(sleep_time)
-        GPIO.output(self.pins[0]. GPIO.LOW)
+        GPIO.output(self.pins[0], GPIO.LOW)
         self.pouring = False
         return True
 

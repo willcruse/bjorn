@@ -166,3 +166,25 @@ On failure:
     "error": "ERROR_MESSAGE"
 }
 ```
+
+### Route '/random'
+Creates a random mixture
+Methods: 'POST'</br>
+Request JSON:
+```
+{
+    "amount": AMOUNT_TO_POUR
+}
+```
+On success:
+```
+{
+    "success": true
+}
+```
+On failure:
+```
+{
+    "error": "ERROR_MESSAGE"
+}
+```

@@ -1,7 +1,8 @@
 import asyncio
 from typing import Optional, List, Dict
+import random
 
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from quart import Quart, request, jsonify
 from quart_cors import cors
 
@@ -11,7 +12,7 @@ from drinks import Drink
 from storage import LocalStorage
 
 # Initial Setup
-# GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BOARD)
 
 factory = Factory()
 storage = LocalStorage()
@@ -82,7 +83,7 @@ async def make_drink():
         return jsonify(make_error(f"Couldn't make drink: {e}"))
     if not all(results):
         return jsonify(make_error("Failed to make drink"))
-    
+
     return jsonify({"success": True})
 
 @app.route('/config', methods=['GET', 'POST'])
@@ -138,6 +139,34 @@ async def del_drink():
         return make_error("Missing a required key")
 
     storage.del_drink(request_json["name"])
+    return jsonify({"success": True})
+
+@app.route('/random', methods=['GET'])
+async def random_drink():
+    """
+        1. Load drinks
+        2. Find drink
+        3. Check current config supports
+        4. Generate amounts for each part
+        5. Send pump instructions
+        6. Return success
+    """
+    random_numbers = [random.random() for i in range(6)]
+    sum_nums = sum(random_numbers)
+
+    amounts = [(num/sum_nums)*100 for num in random_numbers]
+    instructions = zip(storage.get_pumps(), amounts)
+
+    try:
+        results = await asyncio.gather(
+            *[instruction[0].pour(instruction[1]) for instruction in instructions]
+        )
+    except Exception as e:
+        return jsonify(make_error(f"Couldn't make drink: {e}"))
+
+    if not all(results):
+        return jsonify(make_error("Failed to make drink"))
+
     return jsonify({"success": True})
 
 if __name__=='__main__':

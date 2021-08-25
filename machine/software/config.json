@@ -3,42 +3,42 @@
         {
             "type": "PeristalticPump",
             "config": {
-                "contents": "vodka",
+                "contents": "jager",
                 "pins": [3, 5]
             }
         },
         {
             "type": "PeristalticPump",
             "config": {
-                "contents": "whisky",
+                "contents": "gin",
                 "pins": [11, 13]
             }
         },
         {
             "type": "PeristalticPump",
             "config": {
-                "contents": "tequila",
+                "contents": "vodka",
                 "pins": [16, 18]
             }
         },
         {
             "type": "PeristalticPump",
             "config": {
-                "contents": "gin",
+                "contents": "whisky",
                 "pins": [21, 23]
             }
         },
         {
             "type": "PeristalticPump",
             "config": {
-                "contents": "coke",
+                "contents": "jager2",
                 "pins": [29, 31]
             }
         },
         {
             "type": "PeristalticPump",
             "config": {
-                "contents": "lemonade",
+                "contents": "rum",
                 "pins": [36, 38]
             }
         }
