@@ -21,7 +21,7 @@ export function Make(props){
         }
     }, [props.drinks])
     return (
-        <Card>
+        <Card style={{minWidth: "18rem"}}>
             <CardBody>
                 <CardTitle>Make</CardTitle>
                 <Form>
